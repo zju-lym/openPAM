@@ -150,7 +150,6 @@ def PAM_recon(openPAM_sig, psf_stack, ht, shift_opt, save_filename, opt):
     #  Now perform ROI extraction to reduce memory burden.
     # extract the region for faster deconv results
     PAM_ROI = openPAM_sig #[:, 0:1000, 0:1000], we used all the meausrement data by default
-    PAM_ROI = openPAM_sig[:, 125:-125, 125:-125]
     
     #  Extract the corresponding optical psfs for the PAM image
     PAM_ROI = einops.rearrange(PAM_ROI, 'nz nx ny->nx ny nz' )      # change to the shape of Nx, Ny, Nt/Nz
@@ -329,7 +328,7 @@ if __name__ == '__main__':
     # Options: 'Solver_FISTA_PnP', 'Solver_Deblur_DRP_refine'
     opt['Solver'] = 'Solver_FISTA_PnP' 
     # Denoiser options: 'drunet', 'ffdnet', 'restormer', 'proxl1', 'proxtv' and 'none' for no denoising in DRP
-    opt['denoiser'] = 'drunet'
+    opt['denoiser'] = 'proxl1'
 
     for f_n_str in subdirs:
         f_n = int(f_n_str)
